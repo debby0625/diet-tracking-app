@@ -6,19 +6,13 @@ const dailyTotal = document.querySelector('#daily-total');
 
 mealDate.value = new Date().toISOString().slice(0, 10);
 
-function calculateDailyCalorieTotal(date) {
-  return meals
-    .filter((meal) => meal.date === date)
-    .reduce((total, meal) => total + Number(meal.calories), 0);
-}
-
 function render() {
   const selectedDate = mealDate.value;
   const visibleMeals = meals.filter((meal) => meal.date === selectedDate);
   mealList.innerHTML = visibleMeals.map((meal) =>
     `<li><span>${meal.mealType}: ${meal.foodName} (${meal.servingAmount})</span><strong>${meal.calories} kcal</strong></li>`
   ).join('');
-  dailyTotal.textContent = calculateDailyCalorieTotal(selectedDate);
+  dailyTotal.textContent = calculateDailyCalorieTotal(meals, selectedDate);
 }
 
 form.addEventListener('submit', (event) => {
